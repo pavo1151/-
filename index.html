@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ice Royale - ארטיק פרימיום</title>
+    <style>
+      :root {
+        --bg: #0f0f14;
+        --card: #1b1b25;
+        --text: #f7f5f2;
+        --muted: #d2cfc9;
+        --accent: #c89d4a;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Heebo", Arial, sans-serif;
+        background: radial-gradient(circle at top, #242436 0%, var(--bg) 60%);
+        color: var(--text);
+      }
+
+      header {
+        text-align: center;
+        padding: 4rem 1rem 2rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 4rem);
+        letter-spacing: 1px;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        margin-top: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .flavors {
+        max-width: 1100px;
+        margin: 2rem auto 4rem;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .flavor {
+        background: linear-gradient(165deg, #2c2c3f, var(--card));
+        border: 1px solid #3b3b52;
+        border-radius: 18px;
+        padding: 1rem;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform .2s ease, border-color .2s ease;
+      }
+
+      .flavor:hover {
+        transform: translateY(-6px);
+        border-color: var(--accent);
+      }
+
+      .bar {
+        width: 80px;
+        height: 140px;
+        border-radius: 28px;
+        margin: 0 auto 1rem;
+        position: relative;
+        box-shadow: inset 0 -10px 25px rgba(255,255,255,.12), 0 8px 20px rgba(0,0,0,.35);
+      }
+
+      .bar::after {
+        content: "";
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 16px;
+        height: 34px;
+        border-radius: 0 0 10px 10px;
+        background: #d9b586;
+      }
+
+      .f-white { background: linear-gradient(180deg, #fffef7, #e7dcc8); }
+      .f-milk { background: linear-gradient(180deg, #8f5d35, #5c3521); }
+      .f-dark { background: linear-gradient(180deg, #3a211a, #1a0f0d); }
+      .f-strawberry { background: linear-gradient(180deg, #ff8aad, #e74c77); }
+      .f-pistachio { background: linear-gradient(180deg, #b6df9f, #7da86b); }
+
+      h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        text-align: center;
+      }
+
+      p { color: var(--muted); text-align: center; margin: .7rem 0 0; }
+
+      footer {
+        text-align: center;
+        padding: 2rem 1rem 3rem;
+        color: #b7b3ab;
+      }
+
+      .cta {
+        display: inline-block;
+        margin-top: 1.5rem;
+        padding: .8rem 1.4rem;
+        border-radius: 999px;
+        border: 1px solid var(--accent);
+        color: #f7e3bd;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Ice Royale</h1>
+      <div class="subtitle">ארטיק פרימיום בסגנון מגנום - ב-5 טעמים מפנקים</div>
+      <a class="cta" href="#flavors">לצפייה בטעמים</a>
+    </header>
+
+    <main id="flavors" class="flavors">
+      <article class="flavor">
+        <div>
+          <div class="bar f-white"></div>
+          <h2>שוקולד לבן</h2>
+          <p>ציפוי שוקולד לבן עשיר עם מרקם קטיפתי.</p>
+        </div>
+      </article>
+
+      <article class="flavor">
+        <div>
+          <div class="bar f-milk"></div>
+          <h2>שוקולד חלב</h2>
+          <p>הקלאסיקה המתוקה והאהובה עם קרנץ' מושלם.</p>
+        </div>
+      </article>
+
+      <article class="flavor">
+        <div>
+          <div class="bar f-dark"></div>
+          <h2>שוקולד מריר</h2>
+          <p>שוקולד עמוק ועוצמתי לחוויית טעם בוגרת.</p>
+        </div>
+      </article>
+
+      <article class="flavor">
+        <div>
+          <div class="bar f-strawberry"></div>
+          <h2>תות</h2>
+          <p>תות פירותי ורענן עם מתיקות מאוזנת.</p>
+        </div>
+      </article>
+
+      <article class="flavor">
+        <div>
+          <div class="bar f-pistachio"></div>
+          <h2>פיסטוק</h2>
+          <p>פיסטוק עדין עם ניחוח אגוזי ייחודי.</p>
+        </div>
+      </article>
+    </main>
+
+    <footer>© 2026 Ice Royale</footer>
+  </body>
+</html>
