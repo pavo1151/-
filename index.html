@@ -263,22 +263,43 @@
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
         const tooltip = document.getElementById('planet-tooltip');
+        let pointerInside = false;
+        let pointerClientX = 0;
+        let pointerClientY = 0;
 
-        renderer.domElement.addEventListener('pointermove', (e) => {
-            pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-            pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        function updateHover() {
+            if (!pointerInside) {
+                tooltip.style.opacity = '0';
+                return;
+            }
             raycaster.setFromCamera(pointer, camera);
             const targets = [sun, ...planets.map(p => p.mesh), moon];
             const hits = raycaster.intersectObjects(targets, false);
             if (hits.length > 0) {
                 const name = hits[0].object === sun ? 'השמש' : hits[0].object.userData.name;
                 tooltip.textContent = name;
-                tooltip.style.left = e.clientX + 'px';
-                tooltip.style.top = e.clientY + 'px';
+                tooltip.style.left = pointerClientX + 'px';
+                tooltip.style.top = pointerClientY + 'px';
                 tooltip.style.opacity = '1';
             } else {
                 tooltip.style.opacity = '0';
             }
+        }
+
+        renderer.domElement.addEventListener('pointermove', (e) => {
+            pointerInside = true;
+            pointerClientX = e.clientX;
+            pointerClientY = e.clientY;
+            pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        renderer.domElement.addEventListener('pointerleave', () => {
+            pointerInside = false;
+            tooltip.style.opacity = '0';
+        });
+        window.addEventListener('blur', () => {
+            pointerInside = false;
+            tooltip.style.opacity = '0';
         });
 
         // --- UI ---
@@ -334,6 +355,7 @@
             if (earth.moonGroup) earth.moonGroup.rotation.y += s * 2.5;
 
             controls.update();
+            updateHover();
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
