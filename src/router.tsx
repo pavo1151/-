@@ -86,4 +86,7 @@ export const router = createBrowserRouter([
       { path: "/destination/:id/portal", element: <PortalPage /> },
     ],
   },
-]);
+], {
+  // Matches Vite's `base`: "/" locally / Netlify / Vercel, "/-" on GitHub Pages.
+  basename: import.meta.env.BASE_URL.replace(/\/$/, "") || "/",
+});
