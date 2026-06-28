@@ -17,6 +17,7 @@ import { cn } from "@/lib/format";
 import { Seo } from "@/components/seo/Seo";
 import { destinationJsonLd, breadcrumbJsonLd, destinationDescription } from "@/lib/seo";
 import { FieldSourceLine } from "@/components/destination/FieldSourceLine";
+import { useCostConverter } from "@/lib/liveData";
 import type { FieldSource } from "@/types";
 
 export default function DestinationDeepCardPage() {
@@ -41,6 +42,11 @@ export default function DestinationDeepCardPage() {
   const fit = calculateFitScore(weights, d);
   const isSaved = savedTrips.some((t) => t.destinationId === d.id);
   const inCompare = selected.includes(d.id);
+  const { convert, currency } = useCostConverter();
+  const budgetExtra =
+    `${convert(d.dailyCostBudget).text} budget · ${convert(d.dailyCostNormal).text} normal · ` +
+    `${convert(d.dailyCostComfort).text} comfort` +
+    (currency !== "EUR" ? ` · live ${currency}` : "");
 
   const handleSave = () => {
     saveTrip({
@@ -120,7 +126,7 @@ export default function DestinationDeepCardPage() {
 
         {/* Reality sections */}
         <div className="grid gap-4 md:grid-cols-2">
-          <Reality icon={<Wallet className="h-4 w-4" />} title="Budget reality" body={d.budgetReality} extra={`${d.dailyCostBudget} budget · ${d.dailyCostNormal} normal · ${d.dailyCostComfort} comfort`} source={d.fieldSources?.cost} />
+          <Reality icon={<Wallet className="h-4 w-4" />} title="Budget reality" body={d.budgetReality} extra={budgetExtra} source={d.fieldSources?.cost} />
           <Reality icon={<Moon className="h-4 w-4" />} title="Nightlife reality" body={d.nightlifeSummary} source={d.fieldSources?.nightlife} />
           <Reality icon={<Heart className="h-4 w-4" />} title="Queer reality" body={d.queerSummary} source={d.fieldSources?.queer} />
           <Reality icon={<Utensils className="h-4 w-4" />} title="Food reality" body={d.foodSummary} source={d.fieldSources?.sensory} />

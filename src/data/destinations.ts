@@ -652,9 +652,28 @@ export const EXTENDED_PINS: Pick<
   { id: "paris", city: "Paris", country: "France", mapPosition: { x: 38, y: 40 }, shortVibe: "Iconic, elegant, dense.", pinOnly: true },
 ];
 
-// Attach generated per-field provenance to every destination.
+/**
+ * Real landmark photos, loaded in the browser from Wikimedia Commons (CC-licensed) via stable
+ * Special:FilePath URLs. If any fails to load, DestinationThumb falls back to the generated
+ * gradient art — so the worst case is the previous look. Swap any URL freely; it's just data.
+ */
+const IMAGES: Record<string, string> = {
+  prague:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Charles%20Bridge%2C%20Prague.jpg?width=1000",
+  belgrade:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Belgrade%20Kalemegdan%20Fortress.jpg?width=1000",
+  athens:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/The%20Acropolis%20of%20Athens.jpg?width=1000",
+  sofia:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alexander%20Nevsky%20Cathedral%2C%20Sofia.jpg?width=1000",
+  budapest:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hungarian%20Parliament%20Building%2C%20Budapest.jpg?width=1000",
+};
+
+// Attach generated per-field provenance + real photos to every destination.
 for (const d of DESTINATIONS) {
   d.fieldSources = buildFieldSources(d);
+  if (IMAGES[d.id]) d.image = IMAGES[d.id];
 }
 
 export const DESTINATIONS_BY_ID = Object.fromEntries(

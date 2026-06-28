@@ -11,6 +11,7 @@ import { Modal } from "@/components/ui/overlays";
 import { WhyYesBlock, WhyNotBlock } from "./WhyBlocks";
 import { useEurovibeStore } from "@/store/useEurovibeStore";
 import { DestinationThumb } from "./DestinationThumb";
+import { useCostConverter } from "@/lib/liveData";
 
 export function DestinationCard({
   destination,
@@ -30,6 +31,8 @@ export function DestinationCard({
 
   const inCompare = selectedDestinations.includes(destination.id);
   const isSaved = savedTrips.some((t) => t.destinationId === destination.id);
+  const { convert } = useCostConverter();
+  const cost = convert(destination.dailyCostNormal);
 
   const quickSave = () => {
     showToast(`${destination.city} added to comparison`, "default");
@@ -69,7 +72,10 @@ export function DestinationCard({
         <div className="flex items-center justify-between text-sm">
           <span className="inline-flex items-center gap-1.5 text-ink-600 font-medium">
             <Wallet className="h-4 w-4 text-coral-600" />
-            {destination.dailyCostNormal}/day
+            {cost.text}/day
+            {cost.live && (
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" title="Live exchange rate" />
+            )}
           </span>
           <span className="text-xs text-ink-400">{scoreLabel(destination.costScore)} value</span>
         </div>
