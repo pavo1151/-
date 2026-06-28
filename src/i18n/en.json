@@ -43,5 +43,26 @@
     "languageHint": "Switch the interface language and direction.",
     "english": "English",
     "hebrew": "עברית (Hebrew)"
+  },
+  "mood": {
+    "eyebrow": "Trip mood",
+    "title": "What do you need from this trip?",
+    "subtitle": "Start with the feeling. We'll help turn it into the right destination.",
+    "describe": "Describe it in your own words…  (e.g. cheap, queer-friendly, alive at night)",
+    "show": "Show me destinations",
+    "surprise": "Surprise me",
+    "toast": "Choose at least one vibe to start",
+    "pickHint": "Pick as many as you like",
+    "selected": "{{count}} selected",
+    "cards": {
+      "cheap-escape": { "title": "Cheap Escape", "cue": "Stretch every euro, keep it simple." },
+      "freedom-nightlife": { "title": "Freedom & Nightlife", "cue": "Late nights, music, no curfew." },
+      "queer-friendly": { "title": "More Queer-Friendly", "cue": "Visible, welcoming, safe to be you." },
+      "different-from-prague": { "title": "Different from Prague", "cue": "Break the Central-Europe pattern." },
+      "solo-not-lonely": { "title": "Solo but Not Lonely", "cue": "Easy to meet people, easy to feel safe." },
+      "soft-adventure": { "title": "Soft Adventure", "cue": "A little uncertainty, still comfortable." },
+      "beautiful-easy": { "title": "Beautiful & Easy", "cue": "Postcard views, low effort, smooth days." },
+      "raw-lively": { "title": "Raw & Lively", "cue": "Unpolished energy, real and alive." }
+    }
   }
 }

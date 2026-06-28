@@ -7,6 +7,8 @@ import { StepProgress } from "@/components/shell/StepProgress";
 import { MOODS } from "@/data/moods";
 import { useEurovibeStore } from "@/store/useEurovibeStore";
 import { cn } from "@/lib/format";
+import { useTranslation } from "react-i18next";
+import { Seo } from "@/components/seo/Seo";
 
 export default function TripMoodPage() {
   const navigate = useNavigate();
@@ -17,10 +19,11 @@ export default function TripMoodPage() {
   const recompute = useEurovibeStore((s) => s.recomputeWeights);
   const surpriseMe = useEurovibeStore((s) => s.surpriseMe);
   const showToast = useEurovibeStore((s) => s.showToast);
+  const { t } = useTranslation();
 
   const proceed = () => {
     if (selected.length === 0 && freeText.trim() === "") {
-      showToast("Choose at least one vibe to start");
+      showToast(t("mood.toast"));
       return;
     }
     recompute();
@@ -29,12 +32,13 @@ export default function TripMoodPage() {
 
   return (
     <PageContainer>
+      <Seo title="Trip mood" path="/mood" />
       <div className="flex flex-col gap-6">
         <StepProgress step={1} total={3} />
         <SectionTitle
-          eyebrow="Trip mood"
-          title="What do you need from this trip?"
-          subtitle="Start with the feeling. We'll help turn it into the right destination."
+          eyebrow={t("mood.eyebrow")}
+          title={t("mood.title")}
+          subtitle={t("mood.subtitle")}
         />
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -63,9 +67,9 @@ export default function TripMoodPage() {
                 )}
                 <div className="text-3xl sm:text-4xl mb-3 drop-shadow-sm">{mood.glyph}</div>
                 <h3 className="font-editorial text-lg font-semibold text-ink-700 leading-tight">
-                  {mood.title}
+                  {t(`mood.cards.${mood.id}.title`)}
                 </h3>
-                <p className="text-sm text-ink-500/90 mt-1">{mood.cue}</p>
+                <p className="text-sm text-ink-500/90 mt-1">{t(`mood.cards.${mood.id}.cue`)}</p>
               </motion.button>
             );
           })}
@@ -75,14 +79,14 @@ export default function TripMoodPage() {
           <input
             value={freeText}
             onChange={(e) => setFreeText(e.target.value)}
-            placeholder="Describe it in your own words…  (e.g. cheap, queer-friendly, alive at night)"
+            placeholder={t("mood.describe")}
             className="w-full rounded-2xl bg-transparent px-4 py-3 text-ink-700 placeholder:text-ink-300 focus:outline-none"
           />
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-sm text-ink-400">
-            {selected.length > 0 ? `${selected.length} vibe${selected.length > 1 ? "s" : ""} selected` : "Pick as many as you like"}
+            {selected.length > 0 ? t("mood.selected", { count: selected.length }) : t("mood.pickHint")}
           </p>
           <div className="flex gap-3">
             <SecondaryButton
@@ -92,10 +96,10 @@ export default function TripMoodPage() {
               }}
               icon={<Sparkles className="h-4 w-4" />}
             >
-              Surprise me
+              {t("mood.surprise")}
             </SecondaryButton>
             <PrimaryButton onClick={proceed} icon={<ArrowRight className="h-4 w-4" />}>
-              Show me destinations
+              {t("mood.show")}
             </PrimaryButton>
           </div>
         </div>
