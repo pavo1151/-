@@ -1,4 +1,4 @@
-import type { Destination } from "@/types";
+import type { Destination, FieldSource, SourcedField } from "@/types";
 import {
   PRAGUE_HOTSPOTS,
   BELGRADE_HOTSPOTS,
@@ -6,6 +6,40 @@ import {
   SOFIA_HOTSPOTS,
   BUDAPEST_HOTSPOTS,
 } from "./hotspots";
+
+/**
+ * Per-field provenance. Fast-moving fields (nightlife, queer) carry lower confidence and a
+ * "check before you go" framing; structural fields (cost, comfort) are steadier. All are
+ * editorial assessments today (live=false); the cost field is the natural first candidate for a
+ * live data feed (see lib/liveData).
+ */
+const FIELD_META: Record<SourcedField, { label: string; delta: number; clamp?: number }> = {
+  cost: { label: "Regional cost-of-living data + editorial", delta: 0 },
+  nightlife: { label: "Venue listings + editorial — changes often", delta: -12, clamp: 80 },
+  safety: { label: "Public safety indices + editorial", delta: -4 },
+  queer: { label: "Community sources + editorial — check before you go", delta: -16, clamp: 78 },
+  comfort: { label: "Editorial assessment", delta: -2 },
+  sensory: { label: "Editorial assessment", delta: -4 },
+  differentFromPrague: { label: "Editorial assessment (vs Prague baseline)", delta: -2 },
+  shopping: { label: "Editorial assessment", delta: -8 },
+  touristDensity: { label: "Tourism volume data + editorial", delta: -4 },
+};
+
+function buildFieldSources(d: Destination): Partial<Record<SourcedField, FieldSource>> {
+  const base = d.sourceMetadata.confidence;
+  const out: Partial<Record<SourcedField, FieldSource>> = {};
+  for (const key of Object.keys(FIELD_META) as SourcedField[]) {
+    const meta = FIELD_META[key];
+    const confidence = Math.max(40, Math.min(meta.clamp ?? 100, base + meta.delta));
+    out[key] = {
+      source: meta.label,
+      verifiedAt: d.sourceMetadata.lastUpdated,
+      confidence,
+      live: false,
+    };
+  }
+  return out;
+}
 
 /**
  * Full demo dataset. Scores are 0..10 per the spec.
@@ -617,6 +651,11 @@ export const EXTENDED_PINS: Pick<
   { id: "amsterdam", city: "Amsterdam", country: "Netherlands", mapPosition: { x: 42, y: 27 }, shortVibe: "Canals, liberal, social.", pinOnly: true },
   { id: "paris", city: "Paris", country: "France", mapPosition: { x: 38, y: 40 }, shortVibe: "Iconic, elegant, dense.", pinOnly: true },
 ];
+
+// Attach generated per-field provenance to every destination.
+for (const d of DESTINATIONS) {
+  d.fieldSources = buildFieldSources(d);
+}
 
 export const DESTINATIONS_BY_ID = Object.fromEntries(
   DESTINATIONS.map((d) => [d.id, d]),

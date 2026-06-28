@@ -16,6 +16,8 @@ import { whyItFitsYou, statusForTrip, tripLabel } from "@/lib/decision";
 import { cn } from "@/lib/format";
 import { Seo } from "@/components/seo/Seo";
 import { destinationJsonLd, breadcrumbJsonLd, destinationDescription } from "@/lib/seo";
+import { FieldSourceLine } from "@/components/destination/FieldSourceLine";
+import type { FieldSource } from "@/types";
 
 export default function DestinationDeepCardPage() {
   const { id } = useParams();
@@ -118,12 +120,12 @@ export default function DestinationDeepCardPage() {
 
         {/* Reality sections */}
         <div className="grid gap-4 md:grid-cols-2">
-          <Reality icon={<Wallet className="h-4 w-4" />} title="Budget reality" body={d.budgetReality} extra={`${d.dailyCostBudget} budget · ${d.dailyCostNormal} normal · ${d.dailyCostComfort} comfort`} />
-          <Reality icon={<Moon className="h-4 w-4" />} title="Nightlife reality" body={d.nightlifeSummary} />
-          <Reality icon={<Heart className="h-4 w-4" />} title="Queer reality" body={d.queerSummary} />
-          <Reality icon={<Utensils className="h-4 w-4" />} title="Food reality" body={d.foodSummary} />
-          <Reality icon={<ShoppingBag className="h-4 w-4" />} title="Shopping reality" body={d.shoppingSummary} />
-          <Reality icon={<Compass className="h-4 w-4" />} title="Different from Prague" body={d.pragueDifferenceText} />
+          <Reality icon={<Wallet className="h-4 w-4" />} title="Budget reality" body={d.budgetReality} extra={`${d.dailyCostBudget} budget · ${d.dailyCostNormal} normal · ${d.dailyCostComfort} comfort`} source={d.fieldSources?.cost} />
+          <Reality icon={<Moon className="h-4 w-4" />} title="Nightlife reality" body={d.nightlifeSummary} source={d.fieldSources?.nightlife} />
+          <Reality icon={<Heart className="h-4 w-4" />} title="Queer reality" body={d.queerSummary} source={d.fieldSources?.queer} />
+          <Reality icon={<Utensils className="h-4 w-4" />} title="Food reality" body={d.foodSummary} source={d.fieldSources?.sensory} />
+          <Reality icon={<ShoppingBag className="h-4 w-4" />} title="Shopping reality" body={d.shoppingSummary} source={d.fieldSources?.shopping} />
+          <Reality icon={<Compass className="h-4 w-4" />} title="Different from Prague" body={d.pragueDifferenceText} source={d.fieldSources?.differentFromPrague} />
         </div>
 
         <Card className="p-5 bg-ivory-100/60">
@@ -157,7 +159,19 @@ export default function DestinationDeepCardPage() {
   );
 }
 
-function Reality({ icon, title, body, extra }: { icon: React.ReactNode; title: string; body: string; extra?: string }) {
+function Reality({
+  icon,
+  title,
+  body,
+  extra,
+  source,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  body: string;
+  extra?: string;
+  source?: FieldSource;
+}) {
   return (
     <Card className="p-5">
       <h3 className="inline-flex items-center gap-2 font-semibold text-ink-700">
@@ -166,6 +180,7 @@ function Reality({ icon, title, body, extra }: { icon: React.ReactNode; title: s
       </h3>
       <p className="mt-2 text-sm text-ink-500">{body}</p>
       {extra && <p className="mt-2 text-xs font-medium text-coral-600">{extra}</p>}
+      <FieldSourceLine source={source} />
     </Card>
   );
 }

@@ -44,6 +44,9 @@ const STATIC_ROUTES = [
   { path: "/compare", title: "Compare destinations", priority: "0.7",
     description: "Compare European destinations side by side — fit, cost, nightlife, queer scene, comfort, safety, tourist density and regret risk.",
     content: `<h1>Compare your best matches</h1><p>See the trade-offs side by side.</p>` },
+  { path: "/methodology", title: "How Eurovibe scores", priority: "0.6",
+    description: "How Eurovibe computes fit scores, how confidence and per-field provenance work, and the content-safety principles behind queer and sensitive content.",
+    content: `<h1>How Eurovibe scores</h1><p>A transparent model over honest, dated data — fit scores, confidence and per-field provenance.</p>` },
 ];
 
 function esc(s) {

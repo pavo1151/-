@@ -137,6 +137,32 @@ export interface SourceMetadata {
   sourceType: string;
 }
 
+/** Provenance for a single destination field (cost, nightlife, safety, …). */
+export interface FieldSource {
+  /** human label for where this value comes from */
+  source: string;
+  /** optional link to the source */
+  url?: string;
+  /** when it was last verified, e.g. "2026-05" */
+  verifiedAt: string;
+  /** 0..100 confidence for this specific field */
+  confidence: number;
+  /** true = pulled from a live data source; false = editorial assessment */
+  live: boolean;
+}
+
+/** The destination fields that carry per-field provenance. */
+export type SourcedField =
+  | "cost"
+  | "nightlife"
+  | "safety"
+  | "queer"
+  | "comfort"
+  | "sensory"
+  | "differentFromPrague"
+  | "shopping"
+  | "touristDensity";
+
 export interface Destination {
   id: string;
   city: string;
@@ -201,6 +227,8 @@ export interface Destination {
   decisionSummary: DecisionSummary;
   routeCompatibility: string[]; // ids that pair well
   sourceMetadata: SourceMetadata;
+  /** per-field provenance (verified date + source + confidence). Attached in data/destinations.ts. */
+  fieldSources?: Partial<Record<SourcedField, FieldSource>>;
 
   /** lightweight pin only (extended europe markers without full content) */
   pinOnly?: boolean;
