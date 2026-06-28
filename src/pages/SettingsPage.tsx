@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { RefreshCw, Shield, Database, Sparkles, Trash2, Volume2, Languages } from "lucide-react";
+import { RefreshCw, Shield, Database, Sparkles, Trash2, Volume2, Languages, Coins } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { CURRENCIES } from "@/lib/liveData";
+import { getBackendStatus } from "@/lib/backend";
 import { PageContainer, SectionTitle, Card } from "@/components/ui/primitives";
 import { SecondaryButton } from "@/components/ui/buttons";
 import { VibeBar } from "@/components/vibe/VibeBar";
@@ -16,6 +18,8 @@ export default function SettingsPage() {
   const showToast = useEurovibeStore((s) => s.showToast);
   const language = useEurovibeStore((s) => s.language);
   const setLanguage = useEurovibeStore((s) => s.setLanguage);
+  const displayCurrency = useEurovibeStore((s) => s.displayCurrency);
+  const setDisplayCurrency = useEurovibeStore((s) => s.setDisplayCurrency);
   const { t } = useTranslation();
 
   const clearEverything = () => {
@@ -47,6 +51,29 @@ export default function SettingsPage() {
                 )}
               >
                 {lng === "en" ? t("settings.english") : t("settings.hebrew")}
+              </button>
+            ))}
+          </div>
+
+          <h2 className="font-semibold text-ink-700 mt-5 mb-1 flex items-center gap-2">
+            <Coins className="h-4 w-4 text-coral-600" /> Display currency
+          </h2>
+          <p className="text-sm text-ink-400 mb-3">
+            Costs are authored in EUR and converted with a live exchange rate (falls back to EUR offline).
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {CURRENCIES.map((c) => (
+              <button
+                key={c.code}
+                onClick={() => setDisplayCurrency(c.code)}
+                className={cn(
+                  "chip border",
+                  displayCurrency === c.code
+                    ? "bg-ink-900 text-white border-ink-900"
+                    : "bg-white text-ink-600 border-ink/10",
+                )}
+              >
+                {c.symbol} {c.code}
               </button>
             ))}
           </div>
@@ -108,6 +135,14 @@ export default function SettingsPage() {
           <h2 className="font-semibold text-ink-700 flex items-center gap-2">
             <Database className="h-4 w-4 text-coral-600" /> Data & console
           </h2>
+          <p className="text-sm text-ink-400">
+            Storage:{" "}
+            <span className="font-medium text-ink-600">
+              {getBackendStatus() === "remote"
+                ? "Shared backend (Supabase)"
+                : "This device (localStorage)"}
+            </span>
+          </p>
           <div className="flex flex-wrap gap-3">
             <SecondaryButton onClick={() => navigate("/admin")} icon={<Database className="h-4 w-4" />}>
               Open data console

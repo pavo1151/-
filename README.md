@@ -89,3 +89,10 @@ raw = costW·cost + nightlifeW·nightlife + queerW·queer + safetyW·safety
 
 All data is local mock data and all saves live in `localStorage`. The data layer is structured so a
 Supabase backend and Mapbox/MapLibre maps can be swapped in later without reshaping the app.
+
+## Credits
+
+Destination photos are loaded at runtime from **Wikimedia Commons** (CC-licensed) via stable
+`Special:FilePath` URLs, configured per destination in `src/data/destinations.ts` (`IMAGES`). If a URL
+fails, the UI falls back to generated gradient + SVG art. Swap any URL freely — it's just data.
+
