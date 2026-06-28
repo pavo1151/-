@@ -88,6 +88,9 @@ export default function SettingsPage() {
             <SecondaryButton onClick={() => navigate("/reports")} icon={<Shield className="h-4 w-4" />}>
               Trust reports
             </SecondaryButton>
+            <SecondaryButton onClick={() => navigate("/methodology")} icon={<Shield className="h-4 w-4" />}>
+              How we score
+            </SecondaryButton>
             <SecondaryButton
               onClick={() => { resetProfile(); showToast("Profile reset"); navigate("/mood"); }}
               icon={<RefreshCw className="h-4 w-4" />}

@@ -6,7 +6,7 @@ import { FitScoreBadge } from "@/components/score/FitScore";
 import { DESTINATIONS } from "@/data/destinations";
 import { calculateFitScore } from "@/lib/matching";
 import { useEurovibeStore } from "@/store/useEurovibeStore";
-import type { Destination } from "@/types";
+import type { Destination, FieldSource } from "@/types";
 import { cn } from "@/lib/format";
 
 type Overrides = Record<string, Partial<Record<keyof Destination, number>>>;
@@ -27,6 +27,7 @@ const EDITABLE: { key: keyof Destination; label: string }[] = [
 export default function AdminPage() {
   const weights = useEurovibeStore((s) => s.profile.preferenceWeights);
   const [overrides, setOverrides] = useState<Overrides>({});
+  const [liveOverrides, setLiveOverrides] = useState<Record<string, boolean>>({});
   const [activeId, setActiveId] = useState(DESTINATIONS[0].id);
 
   const merged = useMemo<Destination[]>(
@@ -136,6 +137,53 @@ export default function AdminPage() {
                 <Row label="Based on" value={active.sourceMetadata.basedOn} />
               </dl>
             </Card>
+
+            {active.fieldSources && (
+              <Card className="p-5">
+                <h3 className="inline-flex items-center gap-2 font-semibold text-ink-700 mb-3">
+                  <Database className="h-4 w-4 text-coral-600" /> Field provenance
+                </h3>
+                <div className="space-y-1.5">
+                  {(Object.entries(active.fieldSources) as [string, FieldSource][]).map(
+                    ([field, src]) => {
+                      const isLive = liveOverrides[`${active.id}:${field}`] ?? src.live;
+                      return (
+                        <div
+                          key={field}
+                          className="flex items-center justify-between gap-3 rounded-xl bg-ivory-100/70 px-3 py-2"
+                        >
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-ink-700 capitalize">{field}</p>
+                            <p className="text-[11px] text-ink-400 truncate">
+                              {src.confidence}% · verified {src.verifiedAt}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() =>
+                              setLiveOverrides((prev) => ({
+                                ...prev,
+                                [`${active.id}:${field}`]: !isLive,
+                              }))
+                            }
+                            className={cn(
+                              "flex-none rounded-full px-2.5 py-1 text-[10px] font-semibold border transition-colors",
+                              isLive
+                                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                : "bg-ink-700/5 text-ink-400 border-ink/10",
+                            )}
+                          >
+                            {isLive ? "Live" : "Editorial"}
+                          </button>
+                        </div>
+                      );
+                    },
+                  )}
+                </div>
+                <p className="mt-2 text-[11px] text-ink-400">
+                  Toggle a field's source between live and editorial (in-session demo).
+                </p>
+              </Card>
+            )}
             <Card className="p-5">
               <h3 className="font-semibold text-ink-700 mb-2">Simulation templates</h3>
               <ul className="space-y-1.5 text-sm text-ink-500">

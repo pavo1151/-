@@ -32,6 +32,7 @@ import RouteBuilderPage from "./pages/RouteBuilderPage";
 import AdminPage from "./pages/AdminPage";
 import ReportsPage from "./pages/ReportsPage";
 import SettingsPage from "./pages/SettingsPage";
+import MethodologyPage from "./pages/MethodologyPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 /** Wraps children in the editorial app shell + scroll restoration. */
@@ -75,6 +76,7 @@ export const router = createBrowserRouter([
       { path: "/route", element: <RouteBuilderPage /> },
       { path: "/admin", element: <AdminPage /> },
       { path: "/reports", element: <ReportsPage /> },
+      { path: "/methodology", element: <MethodologyPage /> },
       { path: "/settings", element: <SettingsPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
