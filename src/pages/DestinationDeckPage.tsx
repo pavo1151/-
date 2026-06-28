@@ -9,6 +9,7 @@ import { useEurovibeStore } from "@/store/useEurovibeStore";
 import { scoreAll } from "@/lib/matching";
 import { EXPERIENCE_WORLDS } from "@/data/experienceWorlds";
 import { cn } from "@/lib/format";
+import { Seo } from "@/components/seo/Seo";
 
 type Sort = "fit" | "cheapest" | "nightlife" | "queer";
 
@@ -58,6 +59,11 @@ export default function DestinationDeckPage() {
 
   return (
     <PageContainer>
+      <Seo
+        title="Destinations that fit your vibe"
+        description="Handpicked European cities matched to your energy, style and budget — with fit scores, daily costs, nightlife, queer-friendliness and honest trade-offs."
+        path="/discover"
+      />
       <div className="flex flex-col gap-5">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
           <SectionTitle

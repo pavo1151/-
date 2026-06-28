@@ -14,6 +14,8 @@ import { useEurovibeStore } from "@/store/useEurovibeStore";
 import { getDestinationById, calculateFitScore } from "@/lib/matching";
 import { whyItFitsYou, statusForTrip, tripLabel } from "@/lib/decision";
 import { cn } from "@/lib/format";
+import { Seo } from "@/components/seo/Seo";
+import { destinationJsonLd, breadcrumbJsonLd, destinationDescription } from "@/lib/seo";
 
 export default function DestinationDeepCardPage() {
   const { id } = useParams();
@@ -52,6 +54,13 @@ export default function DestinationDeepCardPage() {
 
   return (
     <PageContainer>
+      <Seo
+        title={`${d.city}, ${d.country}`}
+        description={destinationDescription(d)}
+        path={`/destination/${d.id}`}
+        type="place"
+        jsonLd={[destinationJsonLd(d), breadcrumbJsonLd(d)]}
+      />
       <div className="flex flex-col gap-6">
         <BackButton onClick={() => navigate("/discover")} label="Back to results" />
 
