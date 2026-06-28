@@ -19,6 +19,25 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Visible keyboard focus everywhere (mouse clicks stay clean via :focus-visible). */
+  :focus-visible {
+    outline: 2px solid #f6885b;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Respect users who prefer reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   h1,
   h2,
   h3 {
@@ -51,6 +70,14 @@
 
   .editorial-heading {
     @apply font-editorial text-ink-700 tracking-tight;
+  }
+
+  /* Skip-to-content link: hidden until focused via keyboard. */
+  .skip-link {
+    @apply absolute left-4 top-3 z-[100] -translate-y-20 rounded-full bg-ink-900 px-4 py-2 text-sm font-semibold text-white shadow-lift transition-transform;
+  }
+  .skip-link:focus {
+    @apply translate-y-0;
   }
 
   .chip {

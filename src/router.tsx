@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, Outlet, ScrollRestoration } from "react-router-dom";
 import { AppShell } from "./components/shell/AppShell";
 
@@ -14,9 +15,9 @@ import ExperienceWorldsPage from "./pages/ExperienceWorldsPage";
 import DestinationDeckPage from "./pages/DestinationDeckPage";
 import DestinationDeepCardPage from "./pages/DestinationDeepCardPage";
 
-// Portal
-import AtmospherePreviewPage from "./pages/AtmospherePreviewPage";
-import PortalPage from "./pages/PortalPage";
+// Portal (cinematic, framer-motion heavy → lazy-loaded so they don't bloat the initial bundle)
+const AtmospherePreviewPage = lazy(() => import("./pages/AtmospherePreviewPage"));
+const PortalPage = lazy(() => import("./pages/PortalPage"));
 
 // Decision tools
 import SimulationPage from "./pages/SimulationPage";
@@ -50,8 +51,19 @@ function BareLayout() {
   return (
     <>
       <ScrollRestoration />
-      <Outlet />
+      <Suspense fallback={<CinematicFallback />}>
+        <Outlet />
+      </Suspense>
     </>
+  );
+}
+
+/** Minimal dark loader shown while a cinematic route chunk loads. */
+function CinematicFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-night-950">
+      <div className="h-10 w-10 rounded-full border-[3px] border-white/20 border-t-coral animate-spin" />
+    </div>
   );
 }
 

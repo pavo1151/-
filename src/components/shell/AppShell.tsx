@@ -16,6 +16,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-full bg-ivory-gradient">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       {/* Top navigation */}
       <header className="sticky top-0 z-40 border-b border-ink/5 bg-ivory/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
@@ -58,7 +61,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
 
       {/* Page content */}
-      <main className="pb-24 md:pb-10">{children}</main>
+      <main id="main-content" className="pb-24 md:pb-10">
+        {children}
+      </main>
 
       {/* Mobile bottom navigation */}
       <MobileBottomNav />

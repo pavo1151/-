@@ -17,6 +17,19 @@ export function DestinationThumb({
   const grad = night ? destination.portalBackgroundNight : destination.portalBackgroundDay;
   return (
     <div className={cn("overflow-hidden bg-gradient-to-br", grad, className)}>
+      {destination.image && (
+        <img
+          src={destination.image}
+          alt={`${destination.city}, ${destination.country}`}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={(e) => {
+            // graceful fallback to the generated gradient art
+            (e.currentTarget as HTMLImageElement).style.display = "none";
+          }}
+        />
+      )}
       <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMax slice" className="absolute bottom-0 h-full w-full">
         <g fill={night ? "#0f0b1c" : "#2a3a55"} opacity={night ? 0.85 : 0.45}>
           <path d="M0,200 L0,130 L30,130 L36,110 L42,130 L90,130 L90,95 L104,95 L112,78 L120,95 L120,130 L170,130 L170,108 L196,108 L204,86 L212,108 L240,108 L240,128 L300,128 L308,100 L316,128 L360,128 L360,98 L378,98 L386,80 L394,98 L400,98 L400,200 Z" />
