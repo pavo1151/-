@@ -128,6 +128,7 @@ export default function PortalPage() {
             <button
               key={h.id}
               onClick={() => setOpenHotspot(h)}
+              aria-label={`${h.title} — open details`}
               className={cn(
                 "absolute -translate-x-1/2 -translate-y-1/2 group transition-all",
                 dimmed ? "opacity-40" : "opacity-100",

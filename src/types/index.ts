@@ -232,6 +232,8 @@ export interface Destination {
 
   /** lightweight pin only (extended europe markers without full content) */
   pinOnly?: boolean;
+  /** optional real photo (drop-in under /public/img). Falls back to the generated gradient art. */
+  image?: string;
 }
 
 /** A computed simulation (mood-based, not a rigid itinerary). */
