@@ -12,6 +12,7 @@ import { useEurovibeStore } from "@/store/useEurovibeStore";
 import { DESTINATIONS, EXTENDED_PINS } from "@/data/destinations";
 import { rankByLayer, calculateFitScore, type MapLayer } from "@/lib/matching";
 import { cn } from "@/lib/format";
+import { Seo } from "@/components/seo/Seo";
 import type { Destination } from "@/types";
 
 const LAYERS: { id: MapLayer; label: string; glyph: string; hue: string }[] = [
@@ -52,6 +53,11 @@ export default function DesireMapPage() {
 
   return (
     <PageContainer className="max-w-7xl">
+      <Seo
+        title="Your European desire map"
+        description="See where your travel vibe fits strongest across Europe — an interactive desire map with fit layers for cost, queer-friendliness, nightlife, comfort, adventure and safety."
+        path="/map"
+      />
       <div className="flex flex-col gap-5">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
           <SectionTitle

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FDE7D6"/>
+      <stop offset="0.5" stop-color="#FBC8A6"/>
+      <stop offset="1" stop-color="#F8A981"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8A981"/>
+      <stop offset="1" stop-color="#F6885B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="250" r="92" fill="none" stroke="url(#ring)" stroke-width="20" stroke-linecap="round" stroke-dasharray="430 150" transform="rotate(-90 600 250)"/>
+  <circle cx="600" cy="250" r="26" fill="#FFC979"/>
+  <text x="600" y="430" text-anchor="middle" font-family="Georgia, serif" font-size="84" font-weight="700" fill="#1E3A5F">eurovibe</text>
+  <text x="600" y="500" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" fill="#3C5A7C">Find the trip that fits how you want to feel.</text>
+</svg>

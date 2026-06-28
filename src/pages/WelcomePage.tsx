@@ -8,6 +8,8 @@ import { useEurovibeStore } from "@/store/useEurovibeStore";
 import { topMatch } from "@/lib/matching";
 import { fitLabel } from "@/lib/format";
 import { calculateFitScore } from "@/lib/matching";
+import { Seo } from "@/components/seo/Seo";
+import { websiteJsonLd, organizationJsonLd } from "@/lib/seo";
 
 const FEATURES = [
   { icon: Sparkles, label: "Mood-based matching" },
@@ -25,6 +27,7 @@ export default function WelcomePage() {
 
   return (
     <div className="relative overflow-hidden">
+      <Seo path="/" jsonLd={[websiteJsonLd(), organizationJsonLd()]} />
       {/* cinematic hero backdrop */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-peach-100 via-ivory to-sky-100" />
