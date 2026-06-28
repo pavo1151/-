@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { RefreshCw, Shield, Database, Sparkles, Trash2, Volume2 } from "lucide-react";
+import { RefreshCw, Shield, Database, Sparkles, Trash2, Volume2, Languages } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { PageContainer, SectionTitle, Card } from "@/components/ui/primitives";
 import { SecondaryButton } from "@/components/ui/buttons";
 import { VibeBar } from "@/components/vibe/VibeBar";
@@ -13,6 +14,9 @@ export default function SettingsPage() {
   const setProfile = useEurovibeStore((s) => s.setProfile);
   const resetProfile = useEurovibeStore((s) => s.resetProfile);
   const showToast = useEurovibeStore((s) => s.showToast);
+  const language = useEurovibeStore((s) => s.language);
+  const setLanguage = useEurovibeStore((s) => s.setLanguage);
+  const { t } = useTranslation();
 
   const clearEverything = () => {
     localStorage.removeItem("eurovibe-store");
@@ -24,6 +28,29 @@ export default function SettingsPage() {
     <PageContainer className="max-w-3xl">
       <div className="flex flex-col gap-6">
         <SectionTitle eyebrow="Settings & profile" title="Your Eurovibe profile." subtitle="Tune how matching, trust and the portal behave." />
+
+        <Card className="p-5">
+          <h2 className="font-semibold text-ink-700 mb-1 flex items-center gap-2">
+            <Languages className="h-4 w-4 text-coral-600" /> {t("settings.language")}
+          </h2>
+          <p className="text-sm text-ink-400 mb-3">{t("settings.languageHint")}</p>
+          <div className="flex flex-wrap gap-2">
+            {(["en", "he"] as const).map((lng) => (
+              <button
+                key={lng}
+                onClick={() => setLanguage(lng)}
+                className={cn(
+                  "chip border",
+                  language === lng
+                    ? "bg-ink-900 text-white border-ink-900"
+                    : "bg-white text-ink-600 border-ink/10",
+                )}
+              >
+                {lng === "en" ? t("settings.english") : t("settings.hebrew")}
+              </button>
+            ))}
+          </div>
+        </Card>
 
         <Card className="p-5">
           <h2 className="font-semibold text-ink-700 mb-3 flex items-center gap-2">

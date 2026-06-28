@@ -10,16 +10,18 @@ import { fitLabel } from "@/lib/format";
 import { calculateFitScore } from "@/lib/matching";
 import { Seo } from "@/components/seo/Seo";
 import { websiteJsonLd, organizationJsonLd } from "@/lib/seo";
+import { useTranslation } from "react-i18next";
 
 const FEATURES = [
-  { icon: Sparkles, label: "Mood-based matching" },
-  { icon: Building2, label: "Destination portals" },
-  { icon: Play, label: "Trip simulation" },
-  { icon: Scale, label: "Honest trade-offs" },
-];
+  { icon: Sparkles, key: "mood" },
+  { icon: Building2, key: "portals" },
+  { icon: Play, key: "simulation" },
+  { icon: Scale, key: "tradeoffs" },
+] as const;
 
 export default function WelcomePage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const weights = useEurovibeStore((s) => s.profile.preferenceWeights);
   const surpriseMe = useEurovibeStore((s) => s.surpriseMe);
   const recommended = topMatch(weights);
@@ -43,33 +45,30 @@ export default function WelcomePage() {
           className="space-y-6"
         >
           <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1.5 text-xs font-semibold text-coral-600 border border-white/60 shadow-card">
-            <Sparkles className="h-3.5 w-3.5" /> A smarter way to choose where Europe fits you
+            <Sparkles className="h-3.5 w-3.5" /> {t("welcome.badge")}
           </span>
           <h1 className="editorial-heading text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-balance">
-            Find the trip that fits <span className="text-coral-600">how you want to feel.</span>
+            {t("welcome.headlineA")} <span className="text-coral-600">{t("welcome.headlineB")}</span>
           </h1>
-          <p className="text-lg text-ink-400 max-w-xl">
-            Not another travel list. Eurovibe turns a feeling into a personal trip profile — then helps
-            you discover, enter, simulate and compare European destinations before you go.
-          </p>
+          <p className="text-lg text-ink-400 max-w-xl">{t("welcome.subtitle")}</p>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <PrimaryButton onClick={() => navigate("/mood")} icon={<Sparkles className="h-4 w-4" />}>
-              Start with my vibe
+              {t("welcome.primary")}
             </PrimaryButton>
             <SecondaryButton onClick={() => navigate("/map")} icon={<MapIcon className="h-4 w-4" />}>
-              Explore the map
+              {t("welcome.secondary")}
             </SecondaryButton>
           </div>
 
           <div className="flex flex-wrap gap-2 pt-2">
             {FEATURES.map((f) => (
               <span
-                key={f.label}
+                key={f.key}
                 className="inline-flex items-center gap-1.5 rounded-full bg-white/70 px-3 py-1.5 text-sm text-ink-500 border border-white/60"
               >
                 <f.icon className="h-3.5 w-3.5 text-coral-500" />
-                {f.label}
+                {t(`welcome.features.${f.key}`)}
               </span>
             ))}
           </div>
@@ -90,7 +89,7 @@ export default function WelcomePage() {
                 ❤ {fitLabel(fit)}
               </span>
               <div className="absolute bottom-3 left-4 text-white">
-                <p className="text-xs text-white/70">Recommended for your default vibe</p>
+                <p className="text-xs text-white/70">{t("welcome.recommended")}</p>
                 <h3 className="editorial-heading text-3xl leading-none">{recommended.city}</h3>
               </div>
             </div>
@@ -102,7 +101,7 @@ export default function WelcomePage() {
                   onClick={() => navigate(`/destination/${recommended.id}`)}
                   className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-coral-600 hover:gap-2 transition-all"
                 >
-                  Open profile <ArrowRight className="h-4 w-4" />
+                  {t("common.openProfile")} <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -114,7 +113,7 @@ export default function WelcomePage() {
             }}
             className="mt-4 mx-auto flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-ink-500 border border-white/60 hover:bg-white"
           >
-            <Compass className="h-4 w-4 text-coral-500" /> Or let us surprise you
+            <Compass className="h-4 w-4 text-coral-500" /> {t("welcome.surprise")}
           </button>
         </motion.div>
       </div>

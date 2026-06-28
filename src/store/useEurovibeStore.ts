@@ -47,6 +47,7 @@ interface ToastState {
 
 interface EurovibeState {
   profile: UserProfile;
+  language: "en" | "he";
   tradeChoices: Record<string, TradeChoice>;
   savedTrips: SavedTrip[];
   savedComparisons: SavedComparison[];
@@ -86,6 +87,9 @@ interface EurovibeState {
   removeRoute: (id: string) => void;
   addTrustReport: (r: TrustReport) => void;
 
+  // language
+  setLanguage: (lng: "en" | "he") => void;
+
   // toast
   showToast: (message: string, tone?: "default" | "success") => void;
   clearToast: () => void;
@@ -97,6 +101,7 @@ export const useEurovibeStore = create<EurovibeState>()(
   persist(
     (set) => ({
       profile: defaultProfile(),
+      language: "en",
       tradeChoices: {},
       savedTrips: [],
       savedComparisons: [],
@@ -217,6 +222,8 @@ export const useEurovibeStore = create<EurovibeState>()(
 
       addTrustReport: (r) => set((s) => ({ trustReports: [r, ...s.trustReports] })),
 
+      setLanguage: (lng) => set({ language: lng }),
+
       showToast: (message, tone = "default") =>
         set({ toast: { id: ++toastSeq, message, tone } }),
       clearToast: () => set({ toast: null }),
@@ -225,6 +232,7 @@ export const useEurovibeStore = create<EurovibeState>()(
       name: "eurovibe-store",
       partialize: (s) => ({
         profile: s.profile,
+        language: s.language,
         tradeChoices: s.tradeChoices,
         savedTrips: s.savedTrips,
         savedComparisons: s.savedComparisons,
