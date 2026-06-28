@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "discover": "Discover",
+    "map": "Map",
+    "compare": "Compare",
+    "simulate": "Simulate",
+    "saved": "Saved",
+    "more": "More",
+    "console": "Console"
+  },
+  "common": {
+    "save": "Save",
+    "saved": "Saved",
+    "back": "Back",
+    "compare": "Compare",
+    "inCompare": "In compare",
+    "simulate": "Simulate",
+    "visit": "Visit",
+    "openProfile": "Open profile",
+    "whyYes": "Why yes",
+    "whyNot": "Why not",
+    "yourVibe": "Your vibe",
+    "edit": "Edit"
+  },
+  "welcome": {
+    "badge": "A smarter way to choose where Europe fits you",
+    "headlineA": "Find the trip that fits",
+    "headlineB": "how you want to feel.",
+    "subtitle": "Not another travel list. Eurovibe turns a feeling into a personal trip profile — then helps you discover, enter, simulate and compare European destinations before you go.",
+    "primary": "Start with my vibe",
+    "secondary": "Explore the map",
+    "surprise": "Or let us surprise you",
+    "recommended": "Recommended for your default vibe",
+    "features": {
+      "mood": "Mood-based matching",
+      "portals": "Destination portals",
+      "simulation": "Trip simulation",
+      "tradeoffs": "Honest trade-offs"
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "languageHint": "Switch the interface language and direction.",
+    "english": "English",
+    "hebrew": "עברית (Hebrew)"
+  }
+}

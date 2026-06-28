@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { HelpCircle, MoreHorizontal } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { ProfileDropdown } from "./ProfileDropdown";
@@ -13,6 +14,7 @@ import { cn } from "@/lib/format";
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-full bg-ivory-gradient">
@@ -38,7 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     active ? "text-ink-700" : "text-ink-400 hover:text-ink-600",
                   )}
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                   {active && (
                     <span className="absolute inset-x-3 -bottom-[1px] h-0.5 rounded-full bg-coral" />
                   )}
@@ -53,7 +55,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="hidden lg:inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-ink-400 hover:bg-ink/5"
               title="Data console"
             >
-              <HelpCircle className="h-4 w-4" /> Console
+              <HelpCircle className="h-4 w-4" /> {t("nav.console")}
             </button>
             <ProfileDropdown />
           </div>
@@ -74,6 +76,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 function MobileBottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-ink/5 bg-white/90 backdrop-blur-xl pb-safe">
       <div className="flex items-stretch justify-around px-1">
@@ -90,7 +93,7 @@ function MobileBottomNav() {
               )}
             >
               <Icon className={cn("h-5 w-5", active && "fill-coral-100")} />
-              {item.label}
+              {t(item.labelKey)}
             </Link>
           );
         })}
@@ -99,7 +102,7 @@ function MobileBottomNav() {
           className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium text-ink-400"
         >
           <MoreHorizontal className="h-5 w-5" />
-          More
+          {t("nav.more")}
         </button>
       </div>
     </nav>
